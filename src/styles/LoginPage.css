@@ -1,0 +1,125 @@
+/* โทนส้มหลัก */
+:root {
+    --primary-orange: #FF8C00; /* Dark Orange */
+    --light-orange: #FFA500; /* Orange */
+    --background-color: #f7f7f7;
+    --text-color: #333;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+}
+
+/* 🎯 สไตล์สำหรับรูปภาพโลโก้ (แทนที่ .logo-text) */
+.login-logo {
+    max-width: 200px; /* กำหนดความกว้างสูงสุดของโลโก้ */
+    height: auto;      /* ให้ความสูงปรับตามอัตราส่วน */
+    margin-bottom: 25px; /* เพิ่มระยะห่างด้านล่าง */
+    display: block; /* ให้โลโก้เป็นบล็อกเพื่อให้จัดกึ่งกลางง่าย */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logo-text {
+    /* สไตล์เดิมของข้อความโลโก้ (เก็บไว้เผื่อไม่ได้ใช้รูปภาพ) */
+    color: var(--primary-orange);
+    margin-bottom: 20px;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h2 {
+    color: var(--text-color);
+    margin-bottom: 30px;
+    font-size: 1.5em;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-orange);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: var(--light-orange);
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+/* 🎯 สไตล์สำหรับปุ่มสลับโหมดและลืมรหัสผ่าน */
+.switch-mode-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between; /* จัดวางให้อยู่คนละฝั่ง */
+    align-items: center;
+}
+
+.forgot-password {
+    color: var(--primary-orange);
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.register-toggle-button {
+    background: none;
+    border: none;
+    color: #555; /* สีเทาอ่อนๆ */
+    cursor: pointer;
+    font-size: 0.9em;
+    text-decoration: underline;
+    transition: color 0.2s;
+    padding: 0;
+}
+
+.register-toggle-button:hover {
+    color: var(--primary-orange);
+}

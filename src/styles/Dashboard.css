@@ -1,0 +1,227 @@
+/* ------------------------------------
+   🎨 HAPPY SOFT DASHBOARD THEME
+   ฟอนต์ Sarabun + สีส้มเต็ม Header/Sidebar
+------------------------------------ */
+
+/* --- Import Font --- */
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+
+/* --- Variables --- */
+:root {
+    --primary-orange: #FF8C00;
+    --secondary-orange: #FFA733;
+    --light-orange: #FFF3E0;
+    --background: #FFFDF9;
+    --text: #333333;
+    --white: #FFFFFF;
+    --gray-line: #EDEDED;
+    --font-main: 'Sarabun', sans-serif;
+}
+
+/* --- Font Reset --- */
+html, body, button, input, select, textarea, a, p, h1, h2, h3, h4, h5, h6, span, div {
+    font-family: var(--font-main) !important;
+    color: var(--text);
+    letter-spacing: 0.2px;
+    line-height: 1.5;
+}
+
+/* --- Layout --- */
+body {
+    margin: 0;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ------------------------------------
+   HEADER BAR
+------------------------------------ */
+.main-header {
+    background: var(--primary-orange);
+    padding: 14px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 10;
+}
+
+.header-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.header-logo-img {
+    height: 40px;
+}
+
+.header-nav {
+    display: flex;
+    gap: 50px;
+}
+
+.nav-item {
+    font-size: 1.05em;
+    font-weight: 500;
+    color: white;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+.nav-item:hover {
+    opacity: 0.8;
+}
+
+/* ------------------------------------
+   SIDEBAR
+------------------------------------ */
+.dashboard-content {
+    display: flex;
+    flex: 1;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: var(--primary-orange);
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+}
+
+.sidebar-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.05em;
+    text-align: left;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border-left: 5px solid transparent;
+}
+
+.sidebar-btn:hover {
+    background-color: var(--secondary-orange);
+}
+
+.sidebar-btn.active {
+    background-color: var(--white);
+    color: var(--primary-orange);
+    font-weight: 600;
+    border-left: 5px solid var(--secondary-orange);
+}
+
+.menu-separator {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    margin: 10px 0;
+}
+
+/* ------------------------------------
+   MAIN CONTENT AREA
+------------------------------------ */
+.main-content-wrapper {
+    flex: 1;
+    background-color: var(--background);
+    padding: 30px;
+}
+
+.summary-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.summary-card {
+    flex: 1;
+    min-width: 270px;
+    background-color: var(--white);
+    border-radius: 12px;
+    border-top: 5px solid var(--primary-orange);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    padding: 24px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+
+.summary-card h3 {
+    font-size: 1.2em;
+    color: var(--primary-orange);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+.summary-card p {
+    font-size: 2.3em;
+    font-weight: 700;
+    color: var(--primary-orange);
+    margin-bottom: 12px;
+}
+.details-link {
+    color: var(--primary-orange);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+.details-link:hover {
+    color: var(--secondary-orange);
+    text-decoration: underline;
+}
+
+/* ------------------------------------
+   BUTTONS
+------------------------------------ */
+.action-button.primary-orange-bg {
+    background-color: var(--primary-orange);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.action-button.primary-orange-bg:hover {
+    background-color: var(--secondary-orange);
+}
+
+/* ------------------------------------
+   TABLES
+------------------------------------ */
+.files-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.files-table th, .files-table td {
+    border: 1px solid #eee;
+    padding: 10px 14px;
+    text-align: left;
+}
+.files-table th {
+    background-color: var(--light-orange);
+    color: var(--primary-orange);
+    font-weight: 600;
+}
+.files-table tr:nth-child(even) {
+    background-color: #fffaf3;
+}
+
+/* ------------------------------------
+   FOOTER / TEXT ALIGN
+------------------------------------ */
+.footer {
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9em;
+    color: #777;
+}

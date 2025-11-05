@@ -1,0 +1,132 @@
+/* --- Global Import (Sarabun Font) --- */
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap');
+
+/* --- CSS Variables (Orange Theme) --- */
+:root {
+    --primary-orange: #FF8C00;
+    --secondary-orange: #FFA500;
+    --light-orange-bg: #FFF3E0;
+    --text-color: #333;
+    --font-family: 'Sarabun', sans-serif;
+}
+.about-page-wrapper {
+    /* ใช้ฟอนต์หลักของระบบ */
+    font-family: var(--font-family);
+    background-color: #fafafa;
+    min-height: 100vh;
+}
+.about-page-wrapper body {
+    margin: 0;
+    line-height: 1.8;
+}
+
+/* Header */
+.about-header {
+    background-color: var(--primary-orange);
+    color: white;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.about-header .logo {
+    font-weight: 700;
+    font-size: 1.5em;
+    color: white; 
+}
+.about-header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+.about-header nav a:hover,
+.about-header nav a.active {
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* 🎯 สไตล์สำหรับข้อมูลผู้ใช้ใน AboutPage Header */
+.user-profile-info {
+    color: white; /* 🎯 ทำให้ข้อมูลผู้ใช้เป็นสีขาว */
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+.user-profile-info span { /* สำหรับ ADMIN/USER tag */
+    background-color: var(--secondary-orange); /* สีส้มอ่อนกว่าเล็กน้อย */
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    margin-right: 8px;
+}
+
+/* Hero Section */
+.hero {
+    background-color: var(--light-orange-bg);
+    text-align: center;
+    padding: 80px 20px;
+}
+.hero h1 {
+    color: var(--primary-orange);
+    font-size: 2.8em;
+    margin-bottom: 10px;
+}
+.hero p {
+    font-size: 1.3em;
+    color: #555;
+}
+
+/* Content Container */
+.container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+.container h2 {
+    color: var(--primary-orange);
+    border-left: 6px solid var(--secondary-orange);
+    padding-left: 15px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+/* Value List */
+.value-list {
+    list-style: none;
+    padding: 0;
+}
+.value-list li {
+    background: white;
+    border-left: 5px solid var(--primary-orange);
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Timeline */
+.timeline {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.timeline-item {
+    margin-bottom: 10px;
+    border-left: 3px solid var(--secondary-orange);
+    padding-left: 15px;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-orange);
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+    font-size: 1.1em;
+    margin-top: 60px;
+}
