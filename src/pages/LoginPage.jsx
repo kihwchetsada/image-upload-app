@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from 'axios'; // 1. ใช้ axios
 import '../styles/LoginPage.css';
 import HappySoftLogo from '../assets/fileflowz2.png';
 
 // ใช้ URL เดียวกันกับ App.js
 const API_URL = 'http://172.18.20.45:8080';
 
-function LoginPage() {
+function LoginPage() { // ⭐️ ห้ามรับ props (setUser)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -15,20 +15,8 @@ function LoginPage() {
 
     const navigate = useNavigate();
 
-    // ตรวจสอบ token ทันทีเมื่อเปิดหน้า
-    useEffect(() => {
-        const token = localStorage.getItem('auth_token');
-        const role = localStorage.getItem('user_role');
-        if (token && role) {
-            if (role === 'admin') {
-                navigate('/admin/dashboard', { replace: true });
-            } else {
-                navigate('/user/dashboard', { replace: true });
-            }
-        }
-    }, [navigate]);
+    // ⭐️ (ลบ useEffect ที่ใช้ localStorage ออก)
 
-    // เข้าสู่ระบบ
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
@@ -42,24 +30,24 @@ function LoginPage() {
             const response = await axios.post(
                 `${API_URL}/login`,
                 { username, password },
-                { withCredentials: true }
+                { withCredentials: true } // ⭐️ ต้องมี
             );
 
             const { role } = response.data;
 
-            // เก็บ role และ token ลง localStorage
-            localStorage.setItem('user_role', role);
-            localStorage.setItem('auth_token', 'true'); // ใช้เป็น flag ว่ามีการล็อกอินแล้ว
-
-            // Role-Based Routing
+            // ⭐️ (ห้ามยุ่งกับ localStorage)
+            
             if (role === 'admin') {
                 navigate('/admin/dashboard', { replace: true });
             } else {
-                navigate('/user/dashboard', { replace: true });
+                // ⭐️ ไปที่ /user/dashboard ให้ตรงกับ App.js
+                navigate('/user/dashboard', { replace: true }); 
             }
 
-            // รีเฟรชเพื่อให้ App.js โหลดข้อมูล user ใหม่
+            // ⭐️ บังคับโหลดใหม่ (สำคัญที่สุด)
+            // เพื่อให้ App.js (ไฟล์แม่) โหลดข้อมูล user ใหม่
             window.location.reload();
+
         } catch (err) {
             if (err.response) {
                 setError(err.response.data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
@@ -71,7 +59,6 @@ function LoginPage() {
         }
     };
 
-    // ลงทะเบียน
     const handleRegister = async (e) => {
         e.preventDefault();
         setError('');
@@ -100,6 +87,7 @@ function LoginPage() {
         }
     };
 
+    // ... (ส่วน return JSX ไม่ได้แก้ไข) ...
     return (
         <div className="login-container">
             <div className="login-box">

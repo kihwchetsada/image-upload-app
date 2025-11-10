@@ -1,88 +1,94 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 
-function UserDashboard() {
-  const [user, setUser] = useState(null);
-  const [files, setFiles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+// 1. ⭐️ เพิ่ม API_URL (เพื่อให้เป็นมาตรฐานเดียวกับไฟล์อื่น)
+const API_URL = 'http://172.18.20.45:8080';
 
-  // ตรวจสอบว่า user ยังล็อกอินอยู่หรือไม่
-  useEffect(() => {
-    axios.get('http://172.18.20.45:8080/auth/validate', { withCredentials: true })
-      .then(res => {
-        if (res.data && res.data.user) {
-          setUser(res.data.user);
-        } else {
-          navigate('/login', { replace: true });
+// 2. ⭐️ รับ user มาจาก props (ที่ App.js ส่งมาให้)
+function UserDashboard({ user }) { 
+    const [files, setFiles] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null); // ⭐️ เพิ่ม state สำหรับ error
+    const navigate = useNavigate();
+
+    // 3. ⭐️ ลบ useEffect (บรรทัด 12-23) ที่เรียก /auth/validate ออกทั้งหมด
+    // (เพราะ App.js ทำหน้าที่นี้ให้แล้ว)
+
+    // 4. ⭐️ แก้ไข useEffect นี้ให้ดึง "ไฟล์" เท่านั้น
+    useEffect(() => {
+        // (ถ้า user (prop) ยังไม่มี ก็ไม่ต้องทำอะไร)
+        if (!user) {
+            setLoading(false);
+            return;
         }
-      })
-      .catch(() => navigate('/login', { replace: true }))
-      .finally(() => setLoading(false));
-  }, [navigate]);
 
-  // ดึงไฟล์ของ user
-  useEffect(() => {
-    if (user) {
-      axios.get('http://172.18.20.45:8080/user/myfiles', { withCredentials: true })
-        .then(res => setFiles(res.data))
-        .catch(err => console.error(err));
-    }
-  }, [user]);
+        setLoading(true);
+        setError(null);
 
-  const handleLogout = async () => {
-    try {
-      await axios.post('http://172.18.20.45:8080/auth/logout', {}, { withCredentials: true });
-    } catch (err) {
-      console.warn('Logout failed:', err);
-    } finally {
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('user_role');
-      setUser(null);
-      navigate('/login', { replace: true });
-    }
-  };
+        // 5. ⭐️ แก้ไข URL จาก /user/myfiles เป็น /user/files
+        axios.get(`${API_URL}/user/files`, { withCredentials: true }) 
+            .then(res => {
+                setFiles(res.data);
+            })
+            .catch(err => {
+                console.error("Failed to fetch user files:", err);
+                // 6. ⭐️ นี่คือตัวดัก 401 ที่ถูกต้อง (ถ้าคุกกี้หมดอายุจริงๆ)
+                if (err.response && err.response.status === 401) {
+                    navigate('/login', { replace: true });
+                } else {
+                    setError('ไม่สามารถโหลดไฟล์ได้');
+                }
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+        
+    // 7. ⭐️ ให้ useEffect นี้ทำงานเมื่อ user (prop) เปลี่ยนไป
+    }, [user, navigate]);
 
-  if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>กำลังโหลด...</div>;
+    // 8. ⭐️ ลบ handleLogout (บรรทัด 33-43) ออก
+    // (เพราะ App.js และ Header (ไฟล์แม่) จัดการเรื่องนี้อยู่แล้ว)
 
-  return (
-    <div className="home-container">
-      {/* Header */}
-      <header className="home-header">
-        <div className="home-logo" onClick={() => navigate('/user/dashboard')}>FileFlowz</div>
-        <nav>
-          <Link to="/user/dashboard">หน้าหลัก</Link>
-          <Link to="/upload">อัปโหลดไฟล์</Link>
-          <Link to="/my-list">รายการของฉัน</Link>
-          <Link to="/about">เกี่ยวกับ</Link>
-        </nav>
-        <button onClick={handleLogout} className="sidebar-btn logout">ออกจากระบบ</button>
-      </header>
+    if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>กำลังโหลดข้อมูลไฟล์...</div>;
 
-      {/* Hero Section */}
-      <section className="hero">
-        <h1>ยินดีต้อนรับ, {user?.username || 'User'}</h1>
-        <p>จัดการไฟล์ของคุณได้ง่าย ๆ ที่นี่</p>
-      </section>
+    // 9. ⭐️ เพิ่มการแสดงผล Error (ถ้ามี)
+    if (error) return <div style={{ padding: '40px', textAlign: 'center', color: 'red' }}>{error}</div>;
 
-      {/* ไฟล์ของ user */}
-      <div className="container">
-        <h2>ไฟล์ของฉัน</h2>
-        {files.length === 0 ? (
-          <p>คุณยังไม่มีไฟล์</p>
-        ) : (
-          files.map(file => (
-            <div key={file.id} className="timeline-item">
-              <strong>{file.filename}</strong>
-              <p>อัปโหลดวันที่: {new Date(file.uploaded_at).toLocaleString()}</p>
+    return (
+        <div className="home-container">
+            {/* 10. ⭐️ ลบ <header> (บรรทัด 49-57) ออก
+                (เพราะ App.js แสดง Header ให้อัตโนมัติอยู่แล้ว) */}
+
+            {/* Hero Section */}
+            <section className="hero">
+                {/* 11. ⭐️ ใช้ user (prop) ที่ได้รับมา */}
+                <h1>ยินดีต้อนรับ, {user?.username || 'User'}</h1>
+                <p>จัดการไฟล์ของคุณได้ง่าย ๆ ที่นี่</p>
+            </section>
+
+            {/* ไฟล์ของ user */}
+            <div className="container">
+                <h2>ไฟล์ของฉัน</h2>
+                {files.length === 0 ? (
+                    <p>คุณยังไม่มีไฟล์</p>
+                ) : (
+                    // ⭐️ (แก้ไขเล็กน้อย) Backend (Go) ส่ง /user/files
+                    // (ซึ่งมี id, filename, filesize_bytes, uploaded_at)
+                    files.map(file => (
+                        <div key={file.id} className="timeline-item">
+                            <strong>{file.filename}</strong>
+                            <p>อัปโหลดวันที่: {new Date(file.uploaded_at).toLocaleString()}</p>
+                            {/* (ถ้าอยากแสดงขนาดไฟล์ ก็ทำได้)
+                            <p>ขนาด: {(file.filesize_bytes / 1024).toFixed(2)} KB</p> 
+                            */}
+                        </div>
+                    ))
+                )}
             </div>
-          ))
-        )}
-      </div>
-    </div>
-  );
+        </div>
+    );
 }
 
 export default UserDashboard;

@@ -8,12 +8,12 @@ import LoginPage from './pages/LoginPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import MyListPage from './pages/MyListPage.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
-import UserDashboard from './pages/UserDashboard.jsx';
+import UserDashboard from './pages/UserDashboard.jsx'; // ⭐️ ใช้ Dashboard ใหม่
 
 // Components
 import Header from './components/Header.jsx';
 
-// Protected Route
+// ⭐️ (ใช้ ProtectedRoute จากไฟล์ใหม่ของคุณ)
 const ProtectedRoute = ({ user, children, allowedRoles = ['admin', 'user'] }) => {
     if (!user || !user.role || !allowedRoles.includes(user.role)) {
         return <Navigate to="/login" replace />;
@@ -27,41 +27,28 @@ const API_URL = 'http://172.18.20.45:8080';
 function App() {
     const [user, setUser] = useState(undefined);
 
+    // ⭐️ 1. ใช้ useEffect แบบง่าย (นี่คือ checkAuth ที่ถูกต้อง)
     useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const res = await axios.get(`${API_URL}/auth/validate`, {
-                    withCredentials: true,
-                });
-
-                if (res.data && res.data.user) {
-                    setUser(res.data.user);
-                    localStorage.setItem('user_role', res.data.user.role);
-                } else {
-                    const savedRole = localStorage.getItem('user_role');
-                    setUser(savedRole ? { role: savedRole } : null);
-                }
-            } catch (err) {
-                console.warn('Auth validate failed:', err.message);
-                const savedRole = localStorage.getItem('user_role');
-                setUser(savedRole ? { role: savedRole } : null);
-            }
-        };
-
-        checkAuth();
-    }, []);
+        axios.get(`${API_URL}/auth/validate`, { withCredentials: true })
+            .then(res => {
+                // ⭐️ 2. Backend (Go) ส่งข้อมูล user มาตรงๆ (res.data)
+                // ไม่ได้ซ้อนใน res.data.user
+                setUser(res.data || null); 
+            })
+            .catch(() => {
+                setUser(null);
+            });
+    }, []); // ทำงานครั้งเดียวตอนโหลด
 
     const handleLogout = async () => {
         try {
-            await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
-            console.log('Logout success');
+            // ⭐️ 3. เรียก /logout (ตามที่แก้ Error 404 ไป)
+            await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
         } catch (err) {
             console.warn('Logout failed (ignored):', err.message);
         } finally {
-            localStorage.removeItem('auth_token');
-            localStorage.removeItem('user_role');
+            // 4. ⭐️ ห้ามยุ่งกับ localStorage
             setUser(null);
-            // รีเฟรชเพื่อเคลียร์สถานะ
             window.location.href = '/login';
         }
     };
@@ -79,9 +66,9 @@ function App() {
             <Header user={user} onLogout={handleLogout} />
 
             <Routes>
-                {/* Login / Register */}
-                <Route path="/login" element={<LoginPage setUser={setUser} />} />
-                <Route path="/register" element={<LoginPage isRegister={true} setUser={setUser} />} />
+                {/* 5. ⭐️ ลบ props (setUser) ออก */}
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<LoginPage isRegister={true} />} />
 
                 {/* Default Route */}
                 <Route
@@ -91,7 +78,7 @@ function App() {
                             user.role === 'admin' ? (
                                 <Navigate to="/admin/dashboard" replace />
                             ) : (
-                                <Navigate to="/user/dashboard" replace />
+                                <Navigate to="/user/dashboard" replace /> // ⭐️ ไปที่ user/dashboard
                             )
                         ) : (
                             <Navigate to="/login" replace />
@@ -101,7 +88,7 @@ function App() {
 
                 {/* For backward compatibility */}
                 <Route
-                    path="/home"
+                    path="/home" // ⭐️ /home ก็จะเด้งไปที่ถูกต้อง
                     element={
                         user ? (
                             user.role === 'admin' ? (
@@ -146,7 +133,7 @@ function App() {
 
                 {/* User Dashboard */}
                 <Route
-                    path="/user/dashboard"
+                    path="/user/dashboard" // ⭐️ ใช้ Route ใหม่
                     element={
                         <ProtectedRoute user={user} allowedRoles={['user']}>
                             <UserDashboard user={user} />
