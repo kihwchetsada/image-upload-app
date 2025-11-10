@@ -18,20 +18,20 @@ function HomeDashboard() {
   }, []);
 
   // โหลดไฟล์ตามสิทธิ์
-  const fetchFiles = async () => {
-    try {
-      let url = '';
-      if (user?.role === 'ผู้ดูแลระบบ') url = 'http://172.18.20.45:8080/admin/files';
-      else url = 'http://172.18.20.45:8080/user/files'; // user ได้ไฟล์ของตนเอง
-      const res = await axios.get(url, { withCredentials: true });
-      setFiles(res.data);
-    } catch {
-      setFiles([]);
-    }
-  };
-
   useEffect(() => {
-    if (user) fetchFiles();
+    if (!user) return;
+    const fetchFiles = async () => {
+      try {
+        const url = user?.role === 'ผู้ดูแลระบบ'
+          ? 'http://172.18.20.45:8080/admin/files'
+          : 'http://172.18.20.45:8080/user/files'; // user ได้ไฟล์ของตนเอง
+        const res = await axios.get(url, { withCredentials: true });
+        setFiles(res.data);
+      } catch {
+        setFiles([]);
+      }
+    };
+    fetchFiles();
   }, [user]);
 
   const handleLogout = () => {
