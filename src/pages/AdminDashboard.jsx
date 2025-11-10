@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // ✅ Import Components
-import DashboardSummary from './DashboardSummary';
-import CompanyManagement from './CompanyManagement';
-import UserManagement from './UserManagement';
-import AllFilesAudit from './AllFilesAudit';
-
+import DashboardSummary from './DashboardSummary.jsx';
+import CompanyManagement from './CompanyManagement.jsx';
+import UserManagement from './UserManagement.jsx';
+import ReportsAudit from './ReportsAudit.jsx';
 import '../styles/Dashboard.css';
 
 function AdminDashboard() {
@@ -14,22 +13,21 @@ function AdminDashboard() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // ล้างข้อมูลผู้ใช้ใน localStorage หรือ cookie ถ้ามี
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_role');
     navigate('/login', { replace: true });
   };
 
   const renderContent = () => {
-    switch(activeTab) {
+    switch (activeTab) {
       case 'summary':
         return <DashboardSummary />;
       case 'companies':
         return <CompanyManagement />;
       case 'users':
         return <UserManagement />;
-      case 'files':
-        return <AllFilesAudit />;
+      case 'reports':
+        return <ReportsAudit />;
       default:
         return <DashboardSummary />;
     }
@@ -40,14 +38,14 @@ function AdminDashboard() {
       {/* Header */}
       <header className="main-header">
         <div
-          style={{ cursor: 'pointer', fontWeight: '700', fontSize: '1.6em', color: 'white' }}
+          className="dashboard-logo"
           onClick={() => setActiveTab('summary')}
         >
-          Happy Soft
+          FileFlowz Admin
         </div>
         <nav className="header-nav">
-          <span className="nav-item" onClick={() => navigate('/home')}>หน้าหลัก</span>
-          <span className="nav-item" onClick={() => navigate('/about')}>เกี่ยวกับเรา</span>
+          <span onClick={() => navigate('/home')}>หน้าหลัก</span>
+          <span onClick={() => navigate('/about')}>เกี่ยวกับเรา</span>
         </nav>
       </header>
 
@@ -74,10 +72,10 @@ function AdminDashboard() {
             👤 จัดการผู้ใช้
           </button>
           <button
-            className={`sidebar-btn ${activeTab === 'files' ? 'active' : ''}`}
-            onClick={() => setActiveTab('files')}
+            className={`sidebar-btn ${activeTab === 'reports' ? 'active' : ''}`}
+            onClick={() => setActiveTab('reports')}
           >
-            📁 ดูไฟล์ทั้งหมด
+            📊 รายงานและตรวจสอบไฟล์
           </button>
 
           {/* Logout */}
@@ -89,9 +87,7 @@ function AdminDashboard() {
         </div>
 
         {/* Main Content */}
-        <div className="main-content-wrapper">
-          {renderContent()}
-        </div>
+        <div className="main-content-wrapper">{renderContent()}</div>
       </div>
     </div>
   );

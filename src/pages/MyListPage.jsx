@@ -1,43 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/Home.css';
+import axios from 'axios';
+import Header from '../components/Header.jsx';
 
 function MyListPage() {
-    const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const storedFiles = JSON.parse(localStorage.getItem('uploaded_files') || '[]');
-        setFiles(storedFiles);
-    }, []);
+  useEffect(() => {
+    axios
+      .get('http://172.18.20.45:8080/auth/validate', { withCredentials: true })
+      .then(res => {
+        setUser(res.data);
+        return axios.get('http://172.18.20.45:8080/user/files', { withCredentials: true });
+      })
+      .then(res => setFiles(res.data))
+      .catch(() => setFiles([]));
+  }, []);
 
-    const handleDelete = (index) => {
-        const newFiles = [...files];
-        newFiles.splice(index, 1);
-        localStorage.setItem('uploaded_files', JSON.stringify(newFiles));
-        setFiles(newFiles);
-    };
+  const handleLogout = () => {
+    axios.post('http://172.18.20.45:8080/auth/logout', {}, { withCredentials: true }).then(() => {
+      setUser(null);
+      window.location.href = '/login';
+    });
+  };
 
-    return (
-        <div style={{ padding: '20px' }}>
-            <h1>รายการของฉัน</h1>
-            {files.length === 0 ? (
-                <p className="no-files">ยังไม่มีไฟล์อัปโหลด</p>
-            ) : (
-                <ul>
-                    {files.map((file, index) => (
-                        <li key={index}>
-                            <strong>{file.name}</strong> - {file.uploadedAt}
-                            <button
-                                className="delete-button"
-                                onClick={() => handleDelete(index)}
-                            >
-                                🗑️ ลบ
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
-    );
+  return (
+    <div>
+      <Header user={user} onLogout={handleLogout} />
+      <div style={{ padding: '40px' }}>
+        <h2>📁 ไฟล์ของฉัน</h2>
+        {files.length === 0 ? (
+          <p>ยังไม่มีไฟล์</p>
+        ) : (
+          <ul>
+            {files.map((file, i) => (
+              <li key={i}>{file.filename}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default MyListPage;

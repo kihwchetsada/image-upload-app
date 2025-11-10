@@ -1,0 +1,64 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ff7f32;
+  padding: 12px 40px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-family: "Prompt", sans-serif;
+}
+
+.logo {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: white;
+}
+
+.nav-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  gap: 30px;
+}
+
+.nav-center a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-center a:hover {
+  color: #ffd9b3;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.username {
+  font-weight: 500;
+}
+
+.logout-btn,
+.login-btn {
+  background: white;
+  color: #ff7f32;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover,
+.login-btn:hover {
+  background-color: #ffe6d2;
+}

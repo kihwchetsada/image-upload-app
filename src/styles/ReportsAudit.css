@@ -1,0 +1,69 @@
+@import './theme.css';
+
+.reports-audit {
+  padding: 20px;
+}
+
+.reports-audit h2 {
+  color: #ff6600;
+  margin-bottom: 20px;
+}
+
+.reports-audit h3 {
+  margin-top: 30px;
+  color: #333;
+}
+
+.reports-audit table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.reports-audit th, .reports-audit td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.reports-audit th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.export-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.export-buttons button {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.export-buttons button:hover {
+  background-color: #e25500;
+}
+.search-bar {
+  margin-bottom: 10px;
+}
+
+.search-bar input {
+  width: 300px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95em;
+  transition: 0.3s;
+}
+
+.search-bar input:focus {
+  border-color: #ff6600;
+  outline: none;
+  box-shadow: 0 0 4px rgba(255, 102, 0, 0.3);
+}

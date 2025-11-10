@@ -1,5 +1,5 @@
 /* --- Global Import (Sarabun Font) --- */
-@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap');
+@import './theme.css';
 
 /* --- CSS Variables (fileFlowColors Theme) --- */
 :root {
