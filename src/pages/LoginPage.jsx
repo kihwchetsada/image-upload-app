@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // 1. Import axios
 import '../styles/LoginPage.css';
 
 import HappySoftLogo from '../assets/fileflowz2.png';
 
+// 2. ใช้ URL เดียวกันกับ App.js
 const API_URL = 'http://172.18.20.45:8080';
 
 function LoginPage() {
@@ -24,31 +26,35 @@ function LoginPage() {
         }
 
         try {
-            const response = await fetch(`${API_URL}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
-                credentials: 'include', // ส่ง cookie
-            });
+            // 3. เปลี่ยนมาใช้ axios.post
+            const response = await axios.post(`${API_URL}/login`,
+                { username, password }, // data
+                { withCredentials: true } // 4. ตั้งค่านี้เพื่อให้ส่ง Cookie
+            );
 
-            const data = await response.json();
+            // 5. ลบ localStorage ทั้งหมดออก
+            // เราจะใช้ข้อมูล role แค่เพื่อ "ตัดสินใจ" ว่าจะเด้งไปหน้าไหน
+            const { role } = response.data;
 
-            if (response.ok) {
-                const { token, role } = data;
-                localStorage.setItem('auth_token', token);
-                localStorage.setItem('user_role', role);
-
-                // Role-Based Routing
-                if (role === 'admin') {
-                    navigate('/admin/dashboard', { replace: true });
-                } else {
-                    navigate('/home', { replace: true });
-                }
+            // Role-Based Routing
+            if (role === 'admin') {
+                navigate('/admin/dashboard', { replace: true });
             } else {
-                setError(data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+                navigate('/home', { replace: true });
             }
+            
+            // 6. รีเฟรชหน้าเพื่อให้ App.js ดึงข้อมูล user ใหม่ (สำคัญ)
+            window.location.reload();
+
         } catch (err) {
-            setError('เกิดข้อผิดพลาดในการเชื่อมต่อ Server');
+            // 7. ปรับปรุงการจัดการ Error ให้รองรับ axios
+            if (err.response) {
+                setError(err.response.data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+            } else if (err.request) {
+                setError('เกิดข้อผิดพลาดในการเชื่อมต่อ Server');
+            } else {
+                setError('เกิดข้อผิดพลาดบางอย่าง');
+            }
         }
     };
 
@@ -62,22 +68,22 @@ function LoginPage() {
         }
 
         try {
-            const response = await fetch(`${API_URL}/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+            // 8. เปลี่ยนมาใช้ axios.post
+            await axios.post(`${API_URL}/register`, {
+                username, password
             });
 
-            const data = await response.json();
+            alert("ลงทะเบียนสำเร็จ! กรุณาเข้าสู่ระบบ");
+            setIsRegistering(false);
+            setUsername('');
+            setPassword('');
 
-            if (response.ok) {
-                alert("ลงทะเบียนสำเร็จ! กรุณาเข้าสู่ระบบ");
-                setIsRegistering(false);
-            } else {
-                setError(data.message || 'การลงทะเบียนล้มเหลว');
-            }
         } catch (err) {
-            setError('เกิดข้อผิดพลาดในการเชื่อมต่อ Server');
+            if (err.response) {
+                setError(err.response.data.message || 'การลงทะเบียนล้มเหลว (อาจมีชื่อผู้ใช้นี้แล้ว)');
+            } else {
+                setError('เกิดข้อผิดพลาดในการเชื่อมต่อ Server');
+            }
         }
     };
 

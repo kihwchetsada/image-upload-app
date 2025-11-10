@@ -13,18 +13,27 @@ import AdminDashboard from './pages/AdminDashboard.jsx';
 // Components
 import Header from './components/Header.jsx';
 
+// 1. ⭐️ เพิ่ม URL ของ Backend
+const API_URL = 'http://172.18.20.45:8080';
+
 function App() {
   const [user, setUser] = useState(undefined); // undefined = loading
 
   useEffect(() => {
-    axios.get('http://172.18.20.45:8080/auth/validate', { withCredentials: true })
-      .then(res => setUser(res.data?.user || null))
+    // 2. ⭐️ แก้ไข URL ให้ถูกต้อง
+    axios.get(`${API_URL}/auth/validate`, { withCredentials: true })
+        .then(res => setUser(res.data || null)) 
       .catch(() => setUser(null));
   }, []);
 
   const handleLogout = () => {
-    axios.post('http://172.18.20.45:8080/auth/logout', {}, { withCredentials: true })
-      .then(() => setUser(null));
+    // 2. ⭐️ แก้ไข URL ให้ถูกต้อง
+    axios.post(`${API_URL}/logout`, {}, { withCredentials: true })
+        .then(() => {
+        setUser(null);
+        // สั่งให้รีเฟรชหน้าเพื่อเคลียร์สถานะทั้งหมด
+        window.location.href = '/login'; 
+      });
   };
 
   if (user === undefined) {
