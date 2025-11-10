@@ -11,8 +11,10 @@ import AdminDashboard from './pages/AdminDashboard.jsx';
 import UserDashboard from './pages/UserDashboard.jsx';
 
 // Components
-// ✅ แก้ไข: เพิ่มการนำเข้า Header กลับเข้ามา
-import Header from './components/Header.jsx'; 
+import Header from './components/Header.jsx'; // ✅ Import Header ถูกต้องแล้ว
+
+// กำหนด API URL ที่ใช้ในไฟล์นี้ (หากไม่มีในโค้ดต้นฉบับ ให้เพิ่มเอง)
+const API_URL = 'http://172.18.20.45:8080';
 
 // Protected Route: Component นี้ใช้ได้ดีแล้ว
 const ProtectedRoute = ({ user, children, allowedRoles = ['admin', 'user'] }) => {
@@ -29,7 +31,8 @@ function App() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await axios.get('http://172.18.20.45:8080/auth/validate', {
+                // ใช้ API_URL
+                const res = await axios.get(`${API_URL}/auth/validate`, {
                     withCredentials: true,
                 });
 
@@ -52,8 +55,9 @@ function App() {
 
     const handleLogout = async () => {
         try {
+            // ✅ แก้ไข Syntax Error: ใช้ Template Literal (Backticks)
             await axios.post(
-                'http://172.18.20.45:8080/auth/logout',
+                `${API_URL}/auth/logout`, // ใช้ API_URL และ Backticks
                 {},
                 { withCredentials: true }
             );
@@ -77,14 +81,11 @@ function App() {
     
     return (
         <Router>
-            {/* บรรทัดนี้ (เดิมคือ 85) จะใช้งานได้แล้วหลังจาก import Header */}
             <Header user={user} onLogout={handleLogout} /> 
 
             <Routes>
                 {/* Route: Login/Register (Header Component จะซ่อนตัวเองเมื่อ path ตรงกัน) */}
                 <Route path="/login" element={<LoginPage setUser={setUser} />} />
-                
-                {/* เพิ่ม Route สำหรับ Register ให้ LoginPage จัดการ */}
                 <Route path="/register" element={<LoginPage isRegister={true} setUser={setUser} />} /> 
                 
                 {/* Default route / redirect ตาม role */}

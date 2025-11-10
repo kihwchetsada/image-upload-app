@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AddUserModal from '../components/AddUserModal';
+import { VscAccount } from "react-icons/vsc";
 import '../styles/Dashboard.css';
 
 function UserManagement() {
@@ -22,7 +23,8 @@ function UserManagement() {
 
   return (
     <div className="admin-content-box">
-      <h3>👤 จัดการผู้ใช้</h3>
+        <VscAccount size={22} className="icon" />
+      <h3> จัดการผู้ใช้</h3>
       <button className="action-button primary-orange-bg" onClick={() => setShowAddModal(true)}>
         + เพิ่มผู้ใช้ใหม่
       </button>

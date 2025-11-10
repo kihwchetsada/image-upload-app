@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/ReportsAudit.css';
 
+import { VscOutput } from "react-icons/vsc";
+
 function ReportsAudit() {
   const [reportData, setReportData] = useState([]);
   const [userLogs, setUserLogs] = useState([]);
@@ -57,7 +59,8 @@ function ReportsAudit() {
 
   return (
     <div className="reports-audit">
-      <h2>📊 รายงานและการตรวจสอบไฟล์</h2>
+        <VscOutput size={22} className="icon" />
+     <span> รายงานและการตรวจสอบไฟล์ </span>
 
       {/* 🔍 ช่องค้นหารายงาน */}
       <section>
@@ -65,7 +68,7 @@ function ReportsAudit() {
         <div className="search-bar">
           <input
             type="text"
-            placeholder="🔍 ค้นหาชื่อบริษัท..."
+            placeholder=" ค้นหาชื่อบริษัท..."
             value={searchReport}
             onChange={e => setSearchReport(e.target.value)}
           />
@@ -101,11 +104,11 @@ function ReportsAudit() {
 
       {/* 🔍 ช่องค้นหา Log */}
       <section>
-        <h3>📁 ประวัติการกระทำของผู้ใช้</h3>
+        <h3> ประวัติการกระทำของผู้ใช้</h3>
         <div className="search-bar">
           <input
             type="text"
-            placeholder="🔍 ค้นหาชื่อผู้ใช้หรือชื่อไฟล์..."
+            placeholder=" ค้นหาชื่อผู้ใช้หรือชื่อไฟล์..."
             value={searchLogs}
             onChange={e => setSearchLogs(e.target.value)}
           />
@@ -142,8 +145,8 @@ function ReportsAudit() {
       </section>
 
       <div className="export-buttons">
-        <button onClick={exportToExcel}>📘 ดาวน์โหลด Excel</button>
-        <button onClick={exportToPDF}>📕 ดาวน์โหลด PDF</button>
+        <button onClick={exportToExcel}> ดาวน์โหลด Excel</button>
+        <button onClick={exportToPDF}> ดาวน์โหลด PDF</button>
       </div>
     </div>
   );

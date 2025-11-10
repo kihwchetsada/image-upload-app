@@ -16,8 +16,8 @@ function Header({ user, onLogout }) {
         return null; // ซ่อน Component นี้โดยการคืนค่าเป็น null
     }
 
-    // กำหนด role ให้ชัดเจน หากใช้คำว่า 'ผู้ดูแลระบบ' ใน backend ให้คงไว้
-    const isAdmin = user?.role === 'ผู้ดูแลระบบ';
+    // ✅ แก้ไข: เปลี่ยน 'ผู้ดูแลระบบ' เป็น 'admin' เพื่อให้สอดคล้องกับ App.js และ ProtectedRoute
+    const isAdmin = user?.role === 'admin'; 
 
     return (
         <header className="main-header">
@@ -41,7 +41,8 @@ function Header({ user, onLogout }) {
                 <Link to="/about" className="nav-item">เกี่ยวกับเรา</Link>
                 
                 {/* แสดงเมนู Admin เฉพาะ Admin */}
-                {isAdmin && <Link to="/admin/dashboard" className="nav-item">แดชบอร์ดผู้ดูแล</Link>}
+                {/* ✅ ใช้ isAdmin ที่ตรวจสอบด้วย 'admin' แล้ว */}
+                {isAdmin && <Link to="/admin/dashboard" className="nav-item">แดชบอร์ดผู้ดูแล</Link>} 
             </nav>
 
             {/* ปุ่มขวา */}

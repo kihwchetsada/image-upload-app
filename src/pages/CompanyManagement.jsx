@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddCompanyModal from '../components/AddCompanyModal';
+import {  CgBox } from "react-icons/cg";
 import '../styles/Dashboard.css';
 
 const CompanyManagement = () => {
@@ -23,7 +24,8 @@ const CompanyManagement = () => {
 
   return (
     <div className="admin-content-box">
-      <h3>🏢 จัดการบริษัท</h3>
+        <CgBox size={22} className="icon" />
+      <h3> จัดการบริษัท</h3>
       <button
         className="action-button primary-orange-bg"
         onClick={() => setShowAddModal(true)}
