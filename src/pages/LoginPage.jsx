@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css';
 import HappySoftLogo from '../assets/fileflowz2.png';
 
-// ⭐️ 2. ลบ API_URL ทิ้ง
-
-// ⭐️ 3. รับ 'setUser' มาจาก Props
 function LoginPage({ setUser, isRegister = false }) { 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -13,14 +10,6 @@ function LoginPage({ setUser, isRegister = false }) {
     // ⭐️ 4. แก้ไข isRegistering 
     const [isRegistering, setIsRegistering] = useState(isRegister);
     const navigate = useNavigate();
-
-    // ⭐️ 5. ลบ USEEFFECT ที่ตรวจสอบ LOCALSTORAGE ทิ้งไปทั้งหมด
-    /*
-    useEffect(() => {
-        // ... (ลบบล็อกนี้ทิ้ง) ...
-    }, [navigate]);
-    */
-
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
@@ -31,7 +20,6 @@ function LoginPage({ setUser, isRegister = false }) {
         }
 
         try {
-            // ⭐️ 6. ใช้ Relative Path (เพื่อให้ Proxy ทำงาน)
             const response = await fetch(`/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -68,7 +56,6 @@ function LoginPage({ setUser, isRegister = false }) {
         }
 
         try {
-            // ⭐️ 8. ใช้ Relative Path (เพื่อให้ Proxy ทำงาน)
             const response = await fetch(`/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -79,7 +66,7 @@ function LoginPage({ setUser, isRegister = false }) {
 
             if (response.ok) {
                 alert("ลงทะเบียนสำเร็จ! กรุณาเข้าสู่ระบบ");
-                setIsRegistering(false); // ⭐️ 9. กลับไปหน้า Login
+                setIsRegistering(false); 
             } else {
                 setError(data.message || 'การลงทะเบียนล้มเหลว');
             }
