@@ -99,7 +99,7 @@ function MyListPage({ user }) {
                 {new Date(file.uploaded_at).toLocaleString('th-TH')}
               </span>
               <span className="file-size">
-                { (file.filesize_bytes / 1024 / 1024).toFixed(2) } MB
+                { (file.file_size_bytes / 1024 / 1024).toFixed(2) } MB
               </span>
               {/* ⭐️ 14. ปุ่ม "ดูไฟล์" (Download) */}
               <a 

@@ -49,30 +49,14 @@
 .export-buttons button:hover {
   background-color: #e25500;
 }
-.search-bar {
-  margin-bottom: 10px;
-}
 
-.search-bar input {
-  width: 300px;
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.95em;
-  transition: 0.3s;
-}
-
-.search-bar input:focus {
-  border-color: #ff6600;
-  outline: none;
-  box-shadow: 0 0 4px rgba(255, 102, 0, 0.3);
-}
+/* --- Search Bar --- */
 .search-bar {
   margin-bottom: 15px;
 }
 
 .search-bar input {
-  width: 100%; /* ⭐️ ทำให้เต็มความกว้าง */
+  width: 20%; 
   padding: 10px 14px;
   border-radius: 6px;
   border: 1px solid #ccc;
@@ -81,9 +65,25 @@
   transition: all 0.2s ease-in-out;
 }
 
-/* ⭐️ เพิ่ม UI Feedback ตอนคลิก */
 .search-bar input:focus {
   outline: none;
-  border-color: var(--primary-main); /* ⭐️ ใช้สีจากธีม */
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2); /* ⭐️ ใช้สีจากธีม */
+  border-color: var(--primary-main); 
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2); 
+}
+
+/* --- CSS สำหรับสีของ Action Type --- */
+
+.action-upload {
+  color: #28a745;  /* สีเขียว */
+  font-weight: bold;
+}
+
+.action-download {
+  color: #ffc107;  /* สีเหลือง */
+  font-weight: bold;
+}
+
+.action-delete {
+  color: #dc3545;  /* สีแดง */
+  font-weight: bold;
 }

@@ -1,15 +1,12 @@
-import React, { useState } from "react"; // ⭐️ 1. ลบ useEffect
-// ⭐️ 2. ลบ axios
-
-// 🎨 นำเข้าไอคอน
+import React, { useState } from "react"; 
 import { CgAlignBottom, CgBox } from "react-icons/cg";
-import { VscAccount, VscOutput } from "react-icons/vsc";
-// ⭐️ 3. ลบ IoIosLogOut (ปุ่ม Logout อยู่ใน Header หลัก)
+import { VscAccount, VscOutput, VscFiles } from "react-icons/vsc"; 
 
 import DashboardSummary from "./DashboardSummary.jsx";
 import CompanyManagement from "./CompanyManagement.jsx";
 import UserManagement from "./UserManagement.jsx";
 import ReportsAudit from "./ReportsAudit.jsx";
+import AllFilesAudit from "./AllFilesAudit.jsx"; 
 
 import "../styles/Dashboard.css";
 
@@ -26,6 +23,8 @@ function AdminDashboard() {
         return <UserManagement />;
       case "reports":
         return <ReportsAudit />;
+      case "all_files": 
+        return <AllFilesAudit />;
       default:
         return <DashboardSummary />;
     }
@@ -33,14 +32,13 @@ function AdminDashboard() {
 
   return (
     <div className="dashboard-content">
-      {/* Sidebar */}
       <div className="sidebar">
         <button
           className={`sidebar-btn ${activeTab === "summary" ? "active" : ""}`}
           onClick={() => setActiveTab("summary")}
         >
           <CgAlignBottom size={22} className="icon" />
-          แดชบอร์ด
+            แดชบอร์ด
         </button>
 
         <button
@@ -48,15 +46,15 @@ function AdminDashboard() {
           onClick={() => setActiveTab("companies")}
         >
           <CgBox size={22} className="icon" />
-          จัดการบริษัท
+            จัดการบริษัท
         </button>
 
         <button
           className={`sidebar-btn ${activeTab === "users" ? "active" : ""}`}
           onClick={() => setActiveTab("users")}
         >
-           <VscAccount size={22} className="icon" />
-          จัดการผู้ใช้
+            <VscAccount size={22} className="icon" />
+            จัดการผู้ใช้
         </button>
 
         <button
@@ -64,8 +62,17 @@ function AdminDashboard() {
           onClick={() => setActiveTab("reports")}
         >
           <VscOutput size={22} className="icon" />
-          รายงานและตรวจสอบไฟล์
+            รายงานและตรวจสอบไฟล์
         </button>
+
+        <button
+          className={`sidebar-btn ${activeTab === "all_files" ? "active" : ""}`}
+          onClick={() => setActiveTab("all_files")}
+        >
+          <VscFiles size={22} className="icon" />
+            ดูไฟล์ทั้งหมด
+        </button>
+
       </div>
       <div className="main-content-wrapper">{renderContent()}</div>
     </div>

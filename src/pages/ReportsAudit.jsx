@@ -40,21 +40,18 @@ function ReportsAudit() {
     }
   };
 
-  // ⭐️ 1. (แก้ไข) แก้ไขฟังก์ชันนี้
   const exportToExcel = () => {
-    // ✅ ถูก: บอกเบราว์เซอร์ให้วิ่งไปที่ Backend (port 8080) โดยตรง
-    window.location.href = 'http://172.18.20.45:8080/admin/export/excel';
+    window.location.href = 'http://172.18.20.45:8080/admin/export/excel';
   };
 
-  // ⭐️ 2. (แก้ไข) ฟังก์ชันนี้ยังไม่พร้อมใช้งาน
   const exportToPDF = () => {
     alert('ฟังก์ชัน Export to PDF ยังซับซ้อนและยังไม่พร้อมใช้งานครับ');
   };
 
-  // ... (ส่วนฟิลเตอร์ข้อมูล เหมือนเดิม) ...
   const filteredReports = reportData.filter(item =>
     item.group_name.toLowerCase().includes(searchReport.toLowerCase())
   );
+  
   const filteredLogs = userLogs
     .filter(log => {
       if (!selectedGroup) return false; 
@@ -68,16 +65,27 @@ function ReportsAudit() {
     })
     .filter(log =>
       log.username.toLowerCase().includes(searchLogs.toLowerCase()) ||
-      log.file_name.toLowerCase().includes(searchLogs.toLowerCase())
+      log.file_name.toLowerCase().includes(searchLogs.toLowerCase()) // ⭐️ (ถูกต้องแล้ว)
     );
+
+  // ⭐️ 1. (เพิ่ม) ฟังก์ชันสำหรับกำหนด CSS Class
+  const getActionClass = (action) => {
+    switch (action) {
+      case 'UPLOAD':
+        return 'action-upload';
+      case 'DOWNLOAD':
+        return 'action-download';
+      case 'DELETE':
+        return 'action-delete';
+      default:
+        return '';
+    }
+  };
 
   return (
     <div className="main-content-wrapper">
       <div className="admin-page-header">
         
-        {/* ⭐️ 3. (แก้ไข) ผมย้ายปุ่ม Export มาไว้ตรงนี้
-            เพื่อให้ตรงกับโค้ด JSX ที่คุณส่งมา
-        */}
         <div className="admin-page-title">
           <VscOutput size={22} className="icon" /> 
           <h3>รายงานและการตรวจสอบไฟล์</h3>
@@ -112,7 +120,7 @@ function ReportsAudit() {
               type="text"
               placeholder=" ค้นหากลุ่มหรือผู้ใช้..."
               value={searchReport}
-              onChange={e => setSearchReport(e.target.value)}
+              onChange={e => setSearchReport(e.g.target.value)}
             />
           </div>
         )}
@@ -179,7 +187,10 @@ function ReportsAudit() {
                 filteredLogs.map((log) => (
                   <tr key={log.id}>
                     <td>{log.username}</td>
-                    <td>อัปโหลดไฟล์</td>
+                    
+                    {/* ⭐️ 2. (แก้ไข) เพิ่ม className ที่นี่ */}
+                    <td className={getActionClass(log.action_type)}>{log.action_type}</td>
+                    
                     <td>{log.file_name}</td>
                     <td>{(log.file_size_bytes / 1024 / 1024).toFixed(2)}</td>
                     <td>{new Date(log.created_at).toLocaleString('th-TH')}</td>

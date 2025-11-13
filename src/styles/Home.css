@@ -1,56 +1,158 @@
 .home-container {
-    font-family: var(--font-main);
+  font-family: var(--font-main);
 }
 
 .home-header {
-    display: flex;
-    justify-content: center; /* กึ่งกลาง */
-    align-items: center;
-    background: var(--primary-main);
-    padding: 12px 30px;
-    color: white;
-    gap: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary-main);
+  padding: 12px 30px;
+  color: white;
+  gap: 30px;
 }
 
 .home-logo {
-   font-size: 1.6em; 
-    font-weight: 700; 
-    color: white;
-    cursor: pointer; 
+  font-size: 1.6em;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
 }
 
 .home-header nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 5px 10px;
-    transition: all 0.2s;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 10px;
+  transition: all 0.2s;
 }
 
 .home-header nav a:hover,
 .home-header nav a.active {
-    color: var(--accent-main);
-    border-bottom: 2px solid var(--accent-main);
+  color: var(--accent-main);
+  border-bottom: 2px solid var(--accent-main);
 }
 
 .hero {
-    text-align: center;
-    padding: 60px 20px;
-    margin: 70px auto;
-    background: var(--gradient-flow);
-    color: white;
+  text-align: center;
+  padding: 60px 20px;
+  margin: 70px auto;
+  background: var(--gradient-flow);
+  color: white;
 }
 
 .filter-section input[type="text"],
 .filter-section input[type="date"] {
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid var(--primary-light);
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--primary-light);
 }
 
 .file-list .timeline-item {
-    padding: 12px;
-    margin-bottom: 15px;
-    background-color: var(--background-paper);
-    border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 15px;
+  background-color: var(--background-paper);
+  border-radius: 10px;
+}
+
+/* =======================
+   Greeting Animation (ไม่ซ้อน)
+   ======================= */
+.greeting {
+  font-size: 2em;
+  font-weight: 600;
+  color: #fff;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.fade-text {
+  display: inline-block;
+  min-width: 170px; /* ป้องกันคำสั้นกว่าทำให้ขยับ */
+  text-align: left;
+  opacity: 0;
+  transform: translateY(5px);
+  animation: fadeInOut 3s ease-in-out infinite;
+  white-space: nowrap;
+}
+
+.username {
+  display: inline;
+  font-weight: 700;
+  color: #fff;
+  margin-left: 5px;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  10%, 40% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  60%, 100% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+/* =======================
+   Gradient Words Effect (เดิม)
+   ======================= */
+.words {
+  overflow: hidden;
+  position: relative;
+}
+
+.words::after {
+  content: "";
+  position: absolute;
+  top: 0;   /* ✅ แทน inset เพื่อรองรับ iOS เก่า */
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    var(--bg-color) 10%,
+    transparent 30%,
+    transparent 70%,
+    var(--bg-color) 90%
+  );
+  z-index: 20;
+}
+
+.word {
+  display: block;
+  height: 1%;
+  padding-left: 6px;
+  color: #ffffff;
+  animation: spin_4991 2s infinite;
+}
+
+@keyframes spin_4991 {
+  10% {
+    transform: translateY(-102%);
+  }
+  25% {
+    transform: translateY(-100%);
+  }
+  35% {
+    transform: translateY(-202%);
+  }
+  50% {
+    transform: translateY(-200%);
+  }
+  60% {
+    transform: translateY(-302%);
+  }
+  75% {
+    transform: translateY(-300%);
+  }
+  85% {
+    transform: translateY(-402%);
+  }
+  100% {
+    transform: translateY(-400%);
+  }
 }

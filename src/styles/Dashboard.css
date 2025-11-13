@@ -98,6 +98,14 @@ body {
     background: var(--accent-main);
 }
 
+/* --- ⭐️ (เพิ่ม) แก้ไอคอนติดเมนู --- */
+.sidebar-btn .icon {
+  margin-right: 10px;
+  vertical-align: middle; 
+}
+/* ---------------------------------- */
+
+
 /* --- DASHBOARD CONTENT --- */
 .dashboard-content {
     display: flex;
@@ -232,7 +240,7 @@ body {
 }
 
 /* ==============================================
-  ⭐️ ส่วนที่เพิ่มเข้ามา: USER MANAGEMENT STYLES ⭐️
+ ⭐️ ส่วนที่เพิ่มเข้ามา: USER MANAGEMENT STYLES ⭐️
 ==============================================
 */
 
@@ -297,4 +305,61 @@ body {
 .table-action-btn.reset {
   background: var(--secondary-main); 
   color: white;
+}
+
+.filter-controls {
+  display: flex; /* 1. จัดเรียงปุ่มทั้งหมดในแนวนอน */
+  align-items: center; /* 2. จัดให้อยู่กึ่งกลางแนวตั้ง */
+  gap: 12px; /* 3. เพิ่มช่องว่างระหว่างแต่ละปุ่ม */
+  padding: 15px;
+  background-color: #f8f9fa; /* 4. เพิ่มสีพื้นหลังจางๆ ให้กับแถบ */
+  border-radius: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* 5. (เผื่อหน้าจอแคบ) ให้ปุ่มตกบรรทัดใหม่ได้ */
+}
+
+/* 6. สไตล์สำหรับ dropdown (เลือกบริษัท) และ input (วันที่) */
+.filter-controls select,
+.filter-controls input[type="date"] {
+  padding: 8px 12px;
+  border: 1px solid #ced4da; /* 7. สีขอบเทาอ่อน */
+  border-radius: 6px;
+  font-size: 0.9em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 8. ทำให้ฟอนต์ดูดีขึ้น */
+  background-color: #ffffff;
+}
+
+/* 9. สไตล์สำหรับปุ่ม "รีเซ็ต" (ปุ่มทั่วไป) */
+.filter-controls button {
+  padding: 9px 15px; /* 10. ทำให้ปุ่มสูงเท่า input */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #6c757d; /* 11. สีเทา (ปุ่มรอง) */
+  color: white;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.filter-controls button:hover {
+  background-color: #5a6268;
+}
+
+/* 12. สไตล์สำหรับปุ่ม "ลบ" (ให้เหมือนเดิม) */
+.filter-controls .delete-selected-btn {
+  background-color: #dc3545; /* สีแดง */
+  color: white;
+  margin-left: auto; /* 13. ย้ายปุ่มนี้ไปอยู่ขวาสุด */
+}
+
+.filter-controls .delete-selected-btn:hover {
+  background-color: #c82333;
+}
+
+/* 14. สไตล์ปุ่มลบเมื่อถูกปิดใช้งาน */
+.filter-controls .delete-selected-btn:disabled {
+  background-color: #e9ecef;
+  color: #6c757d;
+  opacity: 0.7;
+  cursor: not-allowed;
 }

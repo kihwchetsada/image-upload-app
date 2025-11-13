@@ -29,3 +29,49 @@
   margin-bottom: 10px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
+
+.timeline-item-activity {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.timeline-item-activity:last-child {
+  border-bottom: none;
+}
+
+.timeline-icon {
+  margin-right: 12px;
+  flex-shrink: 0;
+  margin-top: 4px; /* ขยับไอคอนให้ตรงบรรทัดแรก */
+}
+
+.timeline-content {
+  flex-grow: 1;
+}
+
+.timeline-content strong {
+  font-size: 1rem;
+  color: #333;
+}
+
+.timeline-content p {
+  margin: 4px 0 0 0;
+  font-size: 0.875rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.timeline-timestamp {
+  font-size: 0.75rem !important; /* !important เพื่อ override p */
+  color: #888 !important;
+}
+
+.highlight-username {
+  background-color: #e0f0ff; 
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: #100278;
+  font-weight: 600;
+}

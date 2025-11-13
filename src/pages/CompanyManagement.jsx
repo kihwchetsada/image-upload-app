@@ -4,11 +4,17 @@ import AddCompanyModal from "../components/AddCompanyModal";
 import { CgBox } from "react-icons/cg";
 import "../styles/theme.css"; 
 
-// ⭐️ 1. เปลี่ยนฟังก์ชันเป็น bytesToMB
-const bytesToMB = (bytes) => {
-  if (bytes === 0) return 0;
-  // ⭐️ 2. เปลี่ยนตัวหารเป็น (1024 * 1024)
-  return (bytes / (1024 * 1024)); 
+// ⭐️ 1. เปลี่ยนเป็นฟังก์ชัน formatBytes ที่ฉลาดกว่า
+const formatBytes = (bytes, decimals = 2) => {
+  if (!+bytes) return '0 Bytes'; // ใช้ !+bytes เพื่อดัก 0, null, undefined
+  
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB']; // หน่วยที่รองรับ
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${(bytes / Math.pow(k, i)).toFixed(dm)} ${sizes[i] || 'Bytes'}`;
 };
 
 const CompanyManagement = () => {
@@ -72,9 +78,10 @@ const CompanyManagement = () => {
               <th>ชื่อบริษัท</th>
               <th>ผู้ใช้</th>
               <th>ไฟล์</th>
-              {/* ⭐️ 3. เปลี่ยนหัวตารางเป็น (MB) */}
-              <th>พื้นที่ใช้ไป (MB)</th>
-              <th>พื้นที่คงเหลือ (MB)</th>
+              {/* ⭐️ 2. เปลี่ยนหัวตารางให้เหมาะสม */}
+              <th>พื้นที่ใช้ไป</th>
+              <th>โควต้าทั้งหมด</th>
+              <th>พื้นที่คงเหลือ</th>
               <th>วันที่สร้าง</th>
               <th>การดำเนินการ</th>
             </tr>
@@ -82,16 +89,21 @@ const CompanyManagement = () => {
           <tbody>
             {companies.map((c) => {
               
-              // ⭐️ 4. คำนวณเป็น MB ทั้งหมด
+              // ⭐️ 3. คำนวณเป็น Bytes ทั้งหมดเพื่อความแม่นยำ
               const quotaGB = c.storage_quota_gb.Valid ? c.storage_quota_gb.Float64 : 0;
-              const quotaMB = quotaGB * 1024; // ⭐️ แปลงโควต้า GB เป็น MB
+              const quotaBytes = quotaGB * 1024 * 1024 * 1024; // (GB -> Bytes)
               const usedBytes = c.storage_used_bytes || 0;
               
-              const usedMB = bytesToMB(usedBytes); // ⭐️ แปลง Bytes ที่ใช้ไป
+              // ⭐️ 4. สร้างตัวแปรสำหรับแสดงผล
+              const usedDisplay = formatBytes(usedBytes); // e.g., "1.50 GB" หรือ "500.20 MB"
+              const quotaDisplay = quotaGB > 0 ? `${quotaGB.toFixed(1)} GB` : 'ไม่จำกัด';
               
-              const remainingMB = quotaMB > 0 ? (quotaMB - usedMB) : 'N/A';
-              const usedMB_Display = usedMB.toFixed(2); // ⭐️ ตอนนี้จะเป็น (เช่น) 0.95 MB
-              const remainingMB_Display = (typeof remainingMB === 'number') ? remainingMB.toFixed(2) : remainingMB;
+              let remainingDisplay = 'N/A'; // ค่าเริ่มต้นสำหรับโควต้าไม่จำกัด
+              if (quotaBytes > 0) {
+                const remainingBytes = quotaBytes - usedBytes;
+                // ถ้าติดลบ (ใช้เกิน) ก็จะแสดงค่าติดลบ
+                remainingDisplay = formatBytes(remainingBytes); 
+              }
 
               return (
                 <tr key={c.id}>
@@ -99,9 +111,10 @@ const CompanyManagement = () => {
                   <td>{c.user_count}</td>
                   <td>{c.file_count}</td>
                   
-                  {/* ⭐️ 5. แสดงผล MB */}
-                  <td>{usedMB_Display}</td>
-                  <td>{remainingMB_Display}</td>
+                  {/* ⭐️ 5. แสดงผลแบบไดนามิก */}
+                  <td>{usedDisplay}</td>
+                  <td>{quotaDisplay}</td>
+                  <td>{remainingDisplay}</td>
                   
                   <td>{new Date(c.created_at).toLocaleDateString('th-TH')}</td>
                   <td className="action-cell">
