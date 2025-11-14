@@ -1,158 +1,238 @@
 .home-container {
-  font-family: var(--font-main);
+    font-family: var(--font-main);
 }
 
 .home-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--primary-main);
-  padding: 12px 30px;
-  color: white;
-  gap: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--primary-main);
+    padding: 12px 30px;
+    color: white;
+    gap: 30px;
 }
 
 .home-logo {
-  font-size: 1.6em;
-  font-weight: 700;
-  color: white;
-  cursor: pointer;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
 }
 
 .home-header nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 5px 10px;
-  transition: all 0.2s;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: all 0.2s;
 }
 
 .home-header nav a:hover,
 .home-header nav a.active {
-  color: var(--accent-main);
-  border-bottom: 2px solid var(--accent-main);
+    color: var(--accent-main);
+    border-bottom: 2px solid var(--accent-main);
 }
 
 .hero {
-  text-align: center;
-  padding: 60px 20px;
-  margin: 70px auto;
-  background: var(--gradient-flow);
-  color: white;
+    text-align: center;
+    padding: 60px 20px;
+    margin: 70px auto;
+    background: var(--gradient-flow);
+    color: white;
 }
 
 .filter-section input[type="text"],
 .filter-section input[type="date"] {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid var(--primary-light);
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--primary-light);
 }
 
-.file-list .timeline-item {
-  padding: 12px;
-  margin-bottom: 15px;
-  background-color: var(--background-paper);
-  border-radius: 10px;
+/* ⭐️ แก้ไข: ลบ .file-list ออกเพื่อให้ CSS ตรงกับ JS ⭐️ */
+.timeline-item {
+    padding: 12px;
+    margin-bottom: 15px;
+    background-color: var(--background-paper);
+    border-radius: 10px;
 }
 
 /* =======================
-   Greeting Animation (ไม่ซ้อน)
-   ======================= */
+   Greeting Animation (ไม่ซ้อน)
+   ======================= */
 .greeting {
-  font-size: 2em;
-  font-weight: 600;
-  color: #fff;
-  display: inline-flex;
-  align-items: baseline;
+    font-size: 2em;
+    font-weight: 600;
+    color: #fff;
+    display: inline-flex;
+    align-items: baseline;
 }
 
 .fade-text {
-  display: inline-block;
-  min-width: 170px; /* ป้องกันคำสั้นกว่าทำให้ขยับ */
-  text-align: left;
-  opacity: 0;
-  transform: translateY(5px);
-  animation: fadeInOut 3s ease-in-out infinite;
-  white-space: nowrap;
+    display: inline-block;
+    min-width: 170px; /* ป้องกันคำสั้นกว่าทำให้ขยับ */
+    text-align: left;
+    opacity: 0;
+    transform: translateY(5px);
+    animation: fadeInOut 3s ease-in-out infinite;
+    white-space: nowrap;
 }
 
 .username {
-  display: inline;
-  font-weight: 700;
-  color: #fff;
-  margin-left: 5px;
+    display: inline;
+    font-weight: 700;
+    color: #fff;
+    margin-left: 5px;
 }
 
 @keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-  10%, 40% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  60%, 100% {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
+    0% {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    10%, 40% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    60%, 100% {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
 }
 
 /* =======================
-   Gradient Words Effect (เดิม)
-   ======================= */
+   Gradient Words Effect (เดิม)
+   ======================= */
 .words {
-  overflow: hidden;
-  position: relative;
+    overflow: hidden;
+    position: relative;
 }
 
 .words::after {
-  content: "";
-  position: absolute;
-  top: 0;   /* ✅ แทน inset เพื่อรองรับ iOS เก่า */
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(
-    var(--bg-color) 10%,
-    transparent 30%,
-    transparent 70%,
-    var(--bg-color) 90%
-  );
-  z-index: 20;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+        var(--bg-color) 10%,
+        transparent 30%,
+        transparent 70%,
+        var(--bg-color) 90%
+    );
+    z-index: 20;
 }
 
 .word {
-  display: block;
-  height: 1%;
-  padding-left: 6px;
-  color: #ffffff;
-  animation: spin_4991 2s infinite;
+    display: block;
+    height: 1%;
+    padding-left: 6px;
+    color: #ffffff;
+    animation: spin_4991 2s infinite;
 }
 
 @keyframes spin_4991 {
-  10% {
-    transform: translateY(-102%);
-  }
-  25% {
-    transform: translateY(-100%);
-  }
-  35% {
-    transform: translateY(-202%);
-  }
-  50% {
-    transform: translateY(-200%);
-  }
-  60% {
-    transform: translateY(-302%);
-  }
-  75% {
-    transform: translateY(-300%);
-  }
-  85% {
-    transform: translateY(-402%);
-  }
-  100% {
-    transform: translateY(-400%);
-  }
+    10% {
+        transform: translateY(-102%);
+    }
+    25% {
+        transform: translateY(-100%);
+    }
+    35% {
+        transform: translateY(-202%);
+    }
+    50% {
+        transform: translateY(-200%);
+    }
+    60% {
+        transform: translateY(-302%);
+    }
+    75% {
+        transform: translateY(-300%);
+    }
+    85% {
+        transform: translateY(-402%);
+    }
+    100% {
+        transform: translateY(-400%);
+    }
+}
+
+/* =======================
+    ⭐️ 1. เพิ่ม WRAPPER ⭐️
+   ======================= */
+.dashboard-content-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* ถ้าจอเล็ก ให้ตกบรรทัด */
+    gap: 1rem;
+    
+    /* จัดให้อยู่กลางหน้า */
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto 2rem auto; /* 0 auto (center) 2rem bottom */
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* =======================
+    ⭐️ 2. แก้ไข STATS BOX ⭐️
+   ======================= */
+.dashboard-stats {
+    flex: 0 0 300px; /* ⭐️ กว้างคงที่ 300px */
+    gap: 1rem;
+    margin-bottom: 0; /* ⭐️ ลบ margin-bottom เดิมออก */
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #f4f9ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    flex-grow: 1; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.stat-icon {
+    padding: 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon.upload {
+    background-color: #dbeafe; 
+    color: #2563eb;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 2rem; 
+    font-weight: 700;
+    color: #1e3a8a;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: -5px;
+}
+
+/* =======================
+    ⭐️ 3. แก้ไข "MY FILES" BOX ⭐️
+   ======================= */
+.container {
+    flex: 1; /* ⭐️ สัดส่วน 3 ส่วน (ใหญ่กว่า) */
+    min-width: 400px; /* ⭐️ กว้างขั้นต่ำ */
+
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }

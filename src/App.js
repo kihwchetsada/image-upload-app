@@ -9,7 +9,7 @@ import AboutPage from './pages/AboutPage.jsx';
 import MyListPage from './pages/MyListPage.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import UserDashboard from './pages/UserDashboard.jsx';
-
+import ActivityLog from './pages/ActivityLog'; 
 // Components
 import Header from './components/Header.jsx';
 
@@ -143,6 +143,16 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+
+                    <Route
+                        path="/admin/activities"
+                        element={
+                            <ProtectedRoute user={user} allowedRoles={['admin']}>
+                                <ActivityLog />
+                            </ProtectedRoute>
+                        }
+                    />
+
                 <Route
                     path="/user/dashboard"
                     element={

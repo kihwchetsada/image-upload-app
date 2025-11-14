@@ -1,77 +1,112 @@
 @import './theme.css';
 
-
 .dashboard-summary-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  padding: 20px;
+    display: flex;
+    flex-wrap: wrap; /* ⭐️ 1. แก้ไขจาก column เป็น wrap (เพื่อให้เรียงแนวนอน) */
+    gap: 30px;
+    padding: 20px;
+}
+
+/* ⭐️ 2. เพิ่มกฎนี้เพื่อให้กล่องแบ่งพื้นที่และกำหนดความกว้างขั้นต่ำ */
+.summary-graph-box,
+.admin-content-box {
+    flex: 1;
+    min-width: 400px; /* ⭐️ ถ้าจอกว้างไม่พอ 400+400px จะตกบรรทัด */
 }
 
 .summary-graph-box {
-  background: #f4f9ff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    background: #f4f9ff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .admin-content-box {
-  background: #e3f6ff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    background: #e3f6ff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .timeline-item {
-  background: white;
-  border-radius: 8px;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    background: white;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 .timeline-item-activity {
-  display: flex;
-  align-items: flex-start;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
 }
 
 .timeline-item-activity:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 .timeline-icon {
-  margin-right: 12px;
-  flex-shrink: 0;
-  margin-top: 4px; /* ขยับไอคอนให้ตรงบรรทัดแรก */
+    margin-right: 12px;
+    flex-shrink: 0;
+    margin-top: 4px; /* ขยับไอคอนให้ตรงบรรทัดแรก */
 }
 
 .timeline-content {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 .timeline-content strong {
-  font-size: 1rem;
-  color: #333;
+    font-size: 1rem;
+    color: #333;
 }
 
 .timeline-content p {
-  margin: 4px 0 0 0;
-  font-size: 0.875rem;
-  color: #555;
-  line-height: 1.4;
+    margin: 4px 0 0 0;
+    font-size: 0.875rem;
+    color: #555;
+    line-height: 1.4;
 }
 
 .timeline-timestamp {
-  font-size: 0.75rem !important; /* !important เพื่อ override p */
-  color: #888 !important;
+    font-size: 0.75rem !important; /* !important เพื่อ override p */
+    color: #888 !important;
 }
 
 .highlight-username {
-  background-color: #e0f0ff; 
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #100278;
-  font-weight: 600;
+    background-color: #e0f0ff; 
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #100278;
+    font-weight: 600;
+}
+
+.admin-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem; /* เว้นระยะห่างก่อนถึงรายการ */
+}
+
+/* ปรับ h3 ใน box นี้ไม่ให้มี margin */
+.admin-box-header h3 {
+    margin: 0;
+}
+
+/* สไตล์ของลิงก์ "ดูทั้งหมด" */
+.view-all-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #007bff; /* สีลิงก์หลัก */
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.view-all-link:hover {
+    color: #0056b3;
+    background-color: #f0f0f0; /* สีพื้นหลังอ่อนๆ ตอน hover */
+    text-decoration: underline;
 }
